@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<title>MestyBrovser</title>
+<style>/*__CHROME_CSS__*/</style>
+</head>
+<body data-theme="paper">
+  <div class="chrome">
+    <div class="tabstrip">
+      <div class="tabs" id="tabs"></div>
+      <button class="icon-btn new-tab" id="new-tab" title="New tab (Ctrl+T)" aria-label="New tab" data-i18n-title="newTab" data-i18n-aria="newTab">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="brand" title="MestyBrovser">
+        <img src="__LOGO__" alt="">
+        <span>Mesty</span>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="nav-group">
+        <button class="icon-btn" id="back" title="Back (Alt+Left)" aria-label="Back" data-i18n-title="back" data-i18n-aria="back">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="icon-btn" id="forward" title="Forward (Alt+Right)" aria-label="Forward" data-i18n-title="forward" data-i18n-aria="forward">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button class="icon-btn" id="reload" title="Reload (Ctrl+R)" aria-label="Reload" data-i18n-title="reload" data-i18n-aria="reload">
+          <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4.5h-4.5"/></svg>
+        </button>
+      </div>
+
+      <form class="address" id="address-form" autocomplete="off">
+        <span class="site-icon" id="site-icon" hidden><img id="site-favicon" alt=""></span>
+        <span class="security" id="security" title="Connection">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M4 12h16M12 3.5c2.4 2.5 3.6 5.4 3.6 8.5S14.4 18 12 20.5C9.6 18 8.4 15.1 8.4 12S9.6 6 12 3.5Z"/></svg>
+        </span>
+        <input id="address" type="text" spellcheck="false" autocomplete="off"
+               placeholder="Search Google or enter address" aria-label="Address and search bar">
+      </form>
+
+      <span class="incognito-chip" id="incognito-chip" hidden>
+        <svg viewBox="0 0 24 24"><path d="M3 13h18"/><path d="M5 13l1-4.5A2 2 0 0 1 8 7h2.5a2 2 0 0 1 2 2v4"/><path d="M11.5 13v-4a2 2 0 0 1 2-2H16a2 2 0 0 1 2 1.5L19 13"/><circle cx="7" cy="14" r="2.5"/><circle cx="17" cy="14" r="2.5"/></svg>
+        <span data-i18n="incognito">Incognito</span>
+      </span>
+
+      <button class="icon-btn settings" id="customize" title="Settings" aria-label="Settings" data-i18n-title="settings" data-i18n-aria="settings">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 7h10M18 7h2M4 17h2M10 17h10"/>
+          <circle cx="15.5" cy="7" r="2.2"/>
+          <circle cx="7.5" cy="17" r="2.2"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn" id="menu" title="Menu" aria-label="Menu" data-i18n-title="menu" data-i18n-aria="menu">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="18.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </button>
+    </div>
+
+    <div class="progress" id="progress"><div class="bar"></div></div>
+
+    <div class="panel" id="panel" hidden>
+      <div class="panel-menu" id="panel-menu">
+        <button class="menu-item" type="button" data-action="new_tab">
+          <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span data-i18n="newTab">New tab</span> <kbd>Ctrl T</kbd>
+        </button>
+        <button class="menu-item" type="button" data-action="new_incognito">
+          <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M3 13h18"/><path d="M5 13l1-4.5A2 2 0 0 1 8 7h2.5a2 2 0 0 1 2 2v4"/><path d="M11.5 13v-4a2 2 0 0 1 2-2H16a2 2 0 0 1 2 1.5L19 13"/><circle cx="7" cy="14" r="2.5"/><circle cx="17" cy="14" r="2.5"/></svg></span>
+          <span data-i18n="newIncognito">New incognito tab</span> <kbd>⇧ Ctrl N</kbd>
+        </button>
+        <button class="menu-item" type="button" data-action="find">
+          <span class="mi-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span>
+          <span data-i18n="find">Find in page</span> <kbd>Ctrl F</kbd>
+        </button>
+        <div class="zoom-row">
+          <span class="zoom-label" data-i18n="zoom">Zoom</span>
+          <button class="zbtn" type="button" data-action="zoom_out" title="Zoom out">−</button>
+          <span class="zoom-value" id="zoom-value">100%</span>
+          <button class="zbtn" type="button" data-action="zoom_in" title="Zoom in">+</button>
+          <button class="zbtn reset" type="button" data-action="zoom_reset" title="Reset zoom" data-i18n="reset">Reset</button>
+        </div>
+        <div class="menu-sep"></div>
+        <button class="menu-item" type="button" data-action="reopen_tab">
+          <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 2 5.3"/><path d="M4 4v6h6"/></svg></span>
+          <span data-i18n="reopen">Reopen closed tab</span> <kbd>⇧ Ctrl T</kbd>
+        </button>
+        <button class="menu-item" type="button" data-action="home_editor">
+          <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></span>
+          <span data-i18n="customizeHome">Customize home</span> <kbd>Ctrl N</kbd>
+        </button>
+        <button class="menu-item" type="button" data-action="fullscreen">
+          <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></span>
+          <span data-i18n="fullscreen">Fullscreen</span> <kbd>F11</kbd>
+        </button>
+        <div class="menu-sep"></div>
+        <button class="menu-item" type="button" data-action="settings">
+          <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="15.5" cy="7" r="2.2"/><circle cx="7.5" cy="17" r="2.2"/></svg></span>
+          <span data-i18n="settings">Settings</span>
+        </button>
+      </div>
+
+      <div class="findbar" id="findbar" hidden>
+        <svg class="find-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+        <input id="find-input" type="text" placeholder="Find in page" spellcheck="false" autocomplete="off" data-i18n-placeholder="find">
+        <button class="fbtn" type="button" id="find-prev" title="Previous">↑</button>
+        <button class="fbtn" type="button" id="find-next" title="Next">↓</button>
+        <button class="fbtn" type="button" id="find-close" title="Close">×</button>
+      </div>
+    </div>
+  </div>
+<script>/*__THEME_JS__*/</script>
+<script>/*__I18N__*/</script>
+<script>/*__CHROME_JS__*/</script>
+</body>
+</html>
